@@ -94,8 +94,8 @@ if st.session_state.get('connecté', False):
         with onglets[0]:
             creer_atelier()
         # Onglet 2 : Affichage
-    with onglets[1]:
-        afficher_ateliers()
+        with onglets[1]:
+            afficher_ateliers()
         # --- repere ---
     else:
         st.header("Tableau de bord Utilisateur")
