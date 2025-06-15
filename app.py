@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import csv
 import uuid
+import os
 from datetime import datetime
 
 # --- Fonction pour charger les ateliers ---
