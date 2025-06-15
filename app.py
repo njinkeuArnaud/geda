@@ -39,17 +39,16 @@ def creer_atelier():
 
 def afficher_ateliers():
     st.subheader("Liste des ateliers existants")
-        fichier_ateliers = "ateliers.csv"
-
-        if os.path.exists(fichier_ateliers):
-            df_ateliers = pd.read_csv(fichier_ateliers)
-
-            if not df_ateliers.empty:
-                st.dataframe(df_ateliers, use_container_width=True)
-            else:
-                st.info("Aucun atelier enregistré pour l’instant.")
+    fichier_ateliers = "ateliers.csv"
+    if os.path.exists(fichier_ateliers):
+        df_ateliers = pd.read_csv(fichier_ateliers)
+        
+        if not df_ateliers.empty:
+            st.dataframe(df_ateliers, use_container_width=True)
         else:
-            st.info("Le fichier des ateliers n’existe pas encore.")
+            st.info("Aucun atelier enregistré pour l’instant.")
+    else:
+        st.info("Le fichier des ateliers n’existe pas encore.")
 
 # --- Fonction pour charger les utilisateurs ---
 def charger_utilisateurs():
