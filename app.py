@@ -37,6 +37,20 @@ def creer_atelier():
                 writer.writerow(atelier)
             st.success(f"L’atelier **{titre}** a été créé avec succès ✅")
 
+def afficher_ateliers():
+    st.subheader("Liste des ateliers existants")
+        fichier_ateliers = "ateliers.csv"
+
+        if os.path.exists(fichier_ateliers):
+            df_ateliers = pd.read_csv(fichier_ateliers)
+
+            if not df_ateliers.empty:
+                st.dataframe(df_ateliers, use_container_width=True)
+            else:
+                st.info("Aucun atelier enregistré pour l’instant.")
+        else:
+            st.info("Le fichier des ateliers n’existe pas encore.")
+
 # --- Fonction pour charger les utilisateurs ---
 def charger_utilisateurs():
     return pd.read_csv("utilisateurs.csv")
@@ -76,7 +90,14 @@ if st.session_state.get('connecté', False):
     if role == "admin":
         st.header("Tableau de bord Administrateur")
         st.write("Vous avez tous les droits.")
-        creer_atelier()
+        onglets = st.tabs(["➕ Créer un atelier", "📋 Voir les ateliers"])
+        # Onglet 1 : Création
+        with onglets[0]:
+            creer_atelier()
+        # Onglet 2 : Affichage
+    with onglets[1]:
+        afficher_ateliers()
+        # --- repere ---
     else:
         st.header("Tableau de bord Utilisateur")
         st.write("Accès limité aux sessions que vous organisez.")
