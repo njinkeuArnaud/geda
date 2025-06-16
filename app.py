@@ -144,3 +144,4 @@ if st.session_state.get('connecté', False):
     else:
         st.header("Tableau de bord Utilisateur")
         st.write("Accès limité aux sessions que vous organisez.")
+        creer_sessions()
