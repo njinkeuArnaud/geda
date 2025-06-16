@@ -5,6 +5,50 @@ import uuid
 import os
 from datetime import datetime
 
+# --- Fonction pour charger les sessions ---
+def creer_sessions():
+    st.header("Créer une session de formation")
+    # Charger les ateliers disponibles
+    if os.path.exists("ateliers.csv"):
+        df_ateliers = pd.read_csv("ateliers.csv")
+    
+        if df_ateliers.empty:
+            st.warning("Aucun atelier n'est encore disponible. Contactez un administrateur.")
+        else:
+            ateliers_options = {
+                f"{row['titre']} ({row['id_atelier'][:8]})": row["id_atelier"]
+                for _, row in df_ateliers.iterrows()
+            }
+    
+            with st.form("form_session"):
+                atelier_choisi = st.selectbox("Choisir un atelier", list(ateliers_options.keys()))
+                nom_session = st.text_input("Nom de la session")
+                date_session = st.date_input("Date de la session")
+                submitted = st.form_submit_button("Créer la session")
+    
+            if submitted:
+                session = {
+                    "id_session": str(uuid.uuid4()),
+                    "id_atelier": ateliers_options[atelier_choisi],
+                    "nom_session": nom_session,
+                    "date_session": date_session.strftime("%Y-%m-%d"),
+                    "organisateur_email": st.session_state["email"]
+                }
+    
+                fichier_sessions = "sessions.csv"
+                fichier_existe = os.path.exists(fichier_sessions)
+    
+                with open(fichier_sessions, mode="a", newline="", encoding="utf-8") as f:
+                    writer = csv.DictWriter(f, fieldnames=session.keys())
+                    if not fichier_existe:
+                        writer.writeheader()
+                    writer.writerow(session)
+    
+                st.success(f"La session **{nom_session}** a été créée avec succès ✅")
+    else:
+        st.error("Le fichier ateliers.csv est introuvable.")
+
+
 # --- Fonction pour charger les ateliers ---
 def creer_atelier():
     st.subheader("Créer un nouvel atelier")
