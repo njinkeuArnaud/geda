@@ -1,7 +1,8 @@
 # app.py
 
 import streamlit as st
-from gestion import ateliers, sessions, utilisateurs
+from gestion import ateliers
+# from gestion import ateliers, sessions, utilisateurs
 
 # Initialisation des variables de session
 if "authentifie" not in st.session_state:
