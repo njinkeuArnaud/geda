@@ -1,1 +1,4 @@
-xxx
+nom,email,mot_de_passe,role
+Admin,admin@demo.com,admin123,admin
+Alice,alice@demo.com,password1,utilisateur
+Bob,bob@demo.com,password2,utilisateur
